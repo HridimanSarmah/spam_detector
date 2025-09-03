@@ -1,37 +1,31 @@
-# app.py - Spam Mail Detector Web App
-from flask import Flask, render_template, request
+# app.py - Spam Mail Detector (Streamlit)
+import streamlit as st
 import joblib
 import os
-
-# ✅ Define the Flask app here
-app = Flask(__name__)
 
 # Load trained model + vectorizer
 MODEL_DIR = "models"
 vect = joblib.load(os.path.join(MODEL_DIR, "tfidf_vectorizer.joblib"))
 model = joblib.load(os.path.join(MODEL_DIR, "spam_model.joblib"))
 
-@app.route("/", methods=["GET"])
-def index():
-    return render_template("index.html")
+# App UI
+st.title("📧 Spam Mail Detector")
+st.write("Enter a message below to check if it's **Spam** or **Ham (Not Spam)**")
 
-@app.route("/predict", methods=["POST"])
-def predict():
-    text = request.form.get("message", "")
+# Input text
+text = st.text_area("✍️ Message", "")
+
+if st.button("🔍 Predict"):
     if not text.strip():
-        return render_template("result.html", prediction="⚠ Please enter a message.", prob=None)
+        st.warning("⚠ Please enter a message.")
+    else:
+        # Vectorize + predict
+        X = vect.transform([text])
+        pred = model.predict(X)[0]
+        prob = model.predict_proba(X)[0].max()
 
-    # Vectorize + predict
-    X = vect.transform([text])
-    pred = model.predict(X)[0]
-    prob = model.predict_proba(X)[0].max()
+        label = "🚨 Spam" if pred == 1 else "✅ Ham (Not Spam)"
+        st.subheader(f"Prediction: {label}")
+        st.write(f"Confidence: **{prob*100:.2f}%**")
 
-    label = "🚨 Spam" if pred == 1 else "✅ Ham (Not Spam)"
-    return render_template("result.html",
-                           prediction=label,
-                           prob=f"{prob*100:.2f}%",
-                           message=text)
 
-# 🚀 Run the Flask server
-if __name__ == "__main__":
-    app.run(debug=True)
