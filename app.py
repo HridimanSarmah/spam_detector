@@ -1,4 +1,4 @@
-# app.py - Spam Mail Detector (Streamlit with UI Enhancements)
+
 import streamlit as st
 import joblib
 import os
@@ -63,6 +63,7 @@ if st.button("🔍 Predict"):
         # Show original message
         st.write("### Your Message:")
         st.info(text)
+
 
 
 
