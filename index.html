@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>House Price Predictor</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div class="card">
+    <h1>House Price Predictor</h1>
+    <form action="/predict" method="post">
+      <label>MedInc (median income of block):</label>
+      <input name="MedInc" type="number" step="0.01" placeholder="e.g., 3.5" required>
+      <label>HouseAge (median age):</label>
+      <input name="HouseAge" type="number" step="0.1" placeholder="e.g., 20" required>
+      <label>AveRooms (average rooms):</label>
+      <input name="AveRooms" type="number" step="0.01" placeholder="e.g., 5.5" required>
+      <label>AveBedrms (average bedrooms):</label>
+      <input name="AveBedrms" type="number" step="0.01" placeholder="e.g., 1.0" required>
+      <label>Population (block population):</label>
+      <input name="Population" type="number" step="1" placeholder="e.g., 1000" required>
+      <label>AveOccup (average occupants):</label>
+      <input name="AveOccup" type="number" step="0.01" placeholder="e.g., 3.0" required>
+      <label>Latitude:</label>
+      <input name="Latitude" type="number" step="0.0001" placeholder="e.g., 34.0" required>
+      <label>Longitude:</label>
+      <input name="Longitude" type="number" step="0.0001" placeholder="-118.0" required>
+      <button type="submit">Predict Price</button>
+    </form>
+    <footer>Model: StandardScaler + RandomForestRegressor</footer>
+  </div>
+</body>
+</html>

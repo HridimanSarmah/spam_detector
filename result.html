@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Prediction - House Price</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div class="card">
+    <h1>Prediction Result</h1>
+    {% if error %}
+      <div class="error">Error: {{ error }}</div>
+    {% else %}
+      <div class="result">Estimated median house value: <strong>₹{{ predicted }}</strong></div>
+      <div class="params">
+        <h4>Input features</h4>
+        <ul>
+          {% for name, val in params %}
+            <li><strong>{{ name }}:</strong> {{ val }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endif %}
+    <a href="/">← Back</a>
+  </div>
+</body>
+</html>
