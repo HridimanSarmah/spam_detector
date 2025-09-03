@@ -1,5 +1,4 @@
-# train_spam.py
-# Train a Spam Mail Detector using TF-IDF + Naive Bayes
+
 import os
 import pandas as pd
 import requests
@@ -47,4 +46,5 @@ print("\nClassification Report:\n", classification_report(y_test, preds))
 # === Save Artifacts ===
 joblib.dump(vect, "models/tfidf_vectorizer.joblib")
 joblib.dump(model, "models/spam_model.joblib")
+
 print("💾 Model and vectorizer saved in /models folder")
